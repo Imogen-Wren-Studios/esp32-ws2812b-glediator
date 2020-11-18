@@ -1,4 +1,68 @@
 
+uint8_t currentEffect = 0;
+
+//rainbow_demo();
+//  trans_flag();
+//  pride_flag();
+//agender_flag();
+// bi_flag();
+// aromantic_flag();
+// pan_flag();
+//  inclusive_flag();
+
+
+uint32_t demo_delayTime = 10;
+
+uint8_t currentHue = 0;
+
+autoDelay hueDelay;
+autoDelay animationDelay;
+
+uint32_t hueShift_timing = 10;  // delay between steps of hue shifts
+uint32_t animation_timing = 300;  // delay for steps between animations
+
+int16_t hueShift_step = 1;     // Number of steps to take each time
+
+
+void solid_colour(bool randomSpeed = false) {
+
+  leds( XY(0, 0), XY(7, 7) )  = CHSV(currentHue, 255, 255);   // Blue Stripe
+
+  if (randomSpeed) {
+    hueShift_timing = random(1, 500);
+  }
+
+  if (hueDelay.millisDelay(hueShift_timing)) {
+    currentHue = currentHue + hueShift_step;
+  }
+
+}
+
+
+
+void horizontal_lines(bool randomSpeed = true) {
+
+
+  if (randomSpeed) {
+    hueShift_timing = random(1, 50);         // These values seem a nice balance of random colours
+    animation_timing = random(100, 400);
+  }
+
+  if (animationDelay.millisDelay(animation_timing)) {
+    int currentLine = random(0, 7);
+    leds( XY(0, currentLine), XY(7, currentLine) )  = CHSV(currentHue, 255, 255);   // Blue Stripe
+  }
+
+
+  if (hueDelay.millisDelay(hueShift_timing)) {
+    currentHue = currentHue + hueShift_step;
+  }
+
+}
+
+
+
+
 
 void trans_flag() {
   leds( XY(0, 0), XY(7, 0) )  = CRGB(0, 0, 255);   // Blue Stripe
@@ -83,7 +147,7 @@ void inclusive_flag() {
   leds[ XY(1, 1)]             = CRGB(150, 75, 0);   //Brown
   leds[ XY(2, 2)]             = CRGB(150, 75, 0);   //Brown
   leds[ XY(3, 3)]             = CRGB(150, 75, 0);   //Brown
-    
+
 
   leds[ XY(0, 1)]             = CRGB(0, 120, 255);   //Blue
   leds[ XY(1, 2)]             = CRGB(0, 120, 255);   //Blue
@@ -91,14 +155,14 @@ void inclusive_flag() {
 
   leds[ XY(0, 2)]             = CRGB(255, 50, 130);   //pink
   leds[ XY(1, 3)]             = CRGB(255, 50, 130);   //pink
-  
+
   leds[ XY(0, 3)]             = CRGB(255, 255, 255);   //white
-  leds[ XY(0, 4)]             = CRGB(255, 255, 255);   //white 
-    
-  leds[ XY(1, 4)]             = CRGB(255, 50, 130);   //pink 
+  leds[ XY(0, 4)]             = CRGB(255, 255, 255);   //white
+
+  leds[ XY(1, 4)]             = CRGB(255, 50, 130);   //pink
   leds[ XY(0, 5)]             = CRGB(255, 50, 130);   //pink
 
-  leds[ XY(2, 4)]             = CRGB(0, 120, 255);   //Blue  
+  leds[ XY(2, 4)]             = CRGB(0, 120, 255);   //Blue
   leds[ XY(1, 5)]             = CRGB(0, 120, 255);   //Blue
   leds[ XY(0, 6)]             = CRGB(0, 120, 255);   //Blue
 

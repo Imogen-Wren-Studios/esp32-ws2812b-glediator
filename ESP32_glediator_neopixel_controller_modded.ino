@@ -80,7 +80,9 @@ int led_index = 0;
 
 bool update_LEDS;
 
+#include <autoDelay.h>
 
+autoDelay demoDelay;
 
 //includes for other pages
 
@@ -94,6 +96,8 @@ bool update_LEDS;
 void setup() {
 
   Serial.begin(115200);
+
+  randomSeed(analogRead(0));   // psudo random number generator for demo delay times
 
   wifi_setup();
 
@@ -129,17 +133,58 @@ void loop() {
 
   if (currentMode == PLAYBACK_MODE) {
     LEDS.setBrightness(BRIGHTNESS);
-    //rainbow_demo();
-    //  trans_flag();
-    //  pride_flag();
-    //agender_flag();
-    // bi_flag();
-   // aromantic_flag();
-  // pan_flag();
-  inclusive_flag();
+    runDemo();
     FastLED.show();
   } else {
     jinx_data_mode(cb);
   }
+
+}
+
+
+
+
+#define NUM_EFFECTS 9
+
+
+
+void runDemo() {
+
+  if (currentEffect == 0) {
+    rainbow_demo();
+    demo_delayTime = 60;
+  } else if (currentEffect == 1) {
+    demo_delayTime = 10;
+    trans_flag();
+  } else if (currentEffect == 2) {
+    bi_flag();
+  } else if (currentEffect == 3) {
+    solid_colour(true);
+    demo_delayTime = 60;
+  } else if (currentEffect == 4) {
+    demo_delayTime = 10;
+    pride_flag();
+  } else if (currentEffect == 5) {
+    demo_delayTime = 60;
+    horizontal_lines();
+  } else if (currentEffect == 6) {
+    demo_delayTime = 10;
+    pan_flag();
+  } else if (currentEffect == 7) {
+    inclusive_flag();
+  } else if (currentEffect == 8) {
+    agender_flag();
+  } else if (currentEffect == 9) {
+    aromantic_flag();
+  }
+
+  if (demoDelay.secondsDelay(demo_delayTime)) {
+    currentEffect++;
+  }
+
+  if (currentEffect >= NUM_EFFECTS) {
+    currentEffect = 0;
+  }
+
 
 }
