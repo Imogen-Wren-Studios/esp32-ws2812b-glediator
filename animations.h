@@ -23,21 +23,164 @@ uint32_t animation_timing = 300;  // delay for steps between animations
 
 int16_t hueShift_step = 1;     // Number of steps to take each time
 
+// returns either 1 or -1 randomly to change hueshift directions
+int16_t returnRandomShift() {
+  int x = random(0, 200);
 
-void solid_colour(bool randomSpeed = false) {
-
-  leds( XY(0, 0), XY(7, 7) )  = CHSV(currentHue, 255, 255);   // Blue Stripe
-
-  if (randomSpeed) {
-    hueShift_timing = random(1, 500);
+  if (x >= 100) {
+    return 1;
+  } else {
+    return -1;
   }
+}
 
-  if (hueDelay.millisDelay(hueShift_timing)) {
-    currentHue = currentHue + hueShift_step;
+
+bool returnRandomTrue() {
+
+  if (returnRandomShift() > 0) {
+    return true;
+  } else {
+    return false;
   }
 
 }
 
+
+void solid_colour(bool randomSpeed = false, uint32_t shiftSpeed = 100 ) {
+
+  leds( XY(0, 0), XY(7, 7) )  = CHSV(currentHue, 255, 255);   // Blue Stripe
+
+
+
+
+  if (randomSpeed) {                                      // if randomtime is true, pick a new time
+    hueShift_timing = random(1, 500);
+  } else {
+    hueShift_timing = shiftSpeed;
+  }
+
+
+  if (hueDelay.millisDelay(hueShift_timing)) {       // If time is up
+
+    currentHue = currentHue + hueShift_step;
+  }
+}
+
+
+void solid_black() {
+
+  leds( XY(0, 0), XY(7, 7) )  = CHSV(currentHue, 0, 0);   // Blue Stripe
+
+}
+
+
+uint8_t forground_hue = 150;
+
+autoDelay forgroundSwitchDelay;    // used for big changes in animation speed and direction every few seconds
+autoDelay forgroundHueDelay;       // used for small changes to the hue in the forground using millis timing
+autoDelay forgroundAnimation;      // Used to step the animation
+
+uint32_t forground_switch_timing = 10;  // in seconds
+uint32_t animationSpeed = 500;
+
+byte squareX;
+byte squareY;
+byte squareSequencer = 7;
+
+#define Q squareSequencer // to make code more readable
+
+bool use_pastels = false;
+uint8_t saturation = 255;
+
+void generate_squares(bool background = false, bool fastColour = false) {
+
+
+  if (background) {
+    solid_colour(false, 200);               // slow background colour shift
+  } else {
+    solid_black();
+  }
+
+  // if the timer has run out pick a random colour for the forground;
+  if (forgroundSwitchDelay.secondsDelay(forground_switch_timing)) {
+    //  animation_timing = random (300, 2000);
+    forground_switch_timing = random(3, 13);
+    forground_hue = random(0, 255);                  // jump to a random colour
+    currentHue = random(0, 255);                       // jump to a random background colour as well.
+    if (fastColour) {
+      hueShift_timing = random(10, 300);                // Looks better with no background
+    } else {
+      hueShift_timing = random(100, 1000);              // make the forground hue shift on average slower than background shift.
+    }
+    hueShift_step =  returnRandomShift();
+    use_pastels = returnRandomTrue();
+    if (use_pastels) {                               // randomised using pastel shades for forground
+      saturation = random(0, 255);
+    } else {
+      saturation = 255;
+    }
+  }
+
+  if (forgroundHueDelay.millisDelay(hueShift_timing)) {       // shift forground colour around
+    forground_hue = forground_hue - hueShift_step;           // used - so it travels in the opposite direction to the background
+  }
+
+
+
+  if (squareSequencer >= 4) {                                          // Maybe needs some time delay as well
+    squareSequencer = 0;
+    //if (animationDelay.millisDelay(animation_timing)) {                  /// Times the generation of a new square
+    // pick a seed location for the square;
+    animationSpeed = random(50, 270);
+    // animationSpeed = 500;
+    squareX = random(3, 5);
+    squareY = random(3, 5);
+    // squareX = 4;
+    //squareY = 4;
+
+
+  }
+
+
+
+  // Controls the expansion animation of the current square
+
+  if (squareSequencer == 0) {
+    leds[XY(squareX, squareY)] = CHSV(forground_hue, saturation, 255);   //Lights a single LED
+
+  }
+
+  if (squareSequencer == 1) { // lights the 8 surrounding LEDs (requires 4 lines)
+
+    leds(XY(squareX - 1, squareY + 1), XY(squareX + 1, squareY + 1)) = CHSV(forground_hue, saturation, 255); //
+    leds[XY(squareX - 1, squareY)] = CHSV(forground_hue, saturation, 255); //
+    leds[XY(squareX + 1, squareY)] = CHSV(forground_hue, saturation, 255); //
+    leds(XY(squareX - 1, squareY - 1), XY(squareX + 1, squareY - 1)) = CHSV(forground_hue, saturation, 255); //
+
+  }
+
+  if (squareSequencer >= 2) { // lights the 8 surrounding LEDs (requires 4 lines)
+
+    leds(XY(squareX - Q, squareY + Q), XY(squareX + Q, squareY + Q)) = CHSV(forground_hue, saturation, 255); //
+
+    for (int i = 0; i < 2 * Q; i++) {
+      leds[XY(squareX - Q, (squareY + (i - (Q - 1))))] = CHSV(forground_hue, saturation, 255); //
+      leds[XY(squareX + Q, (squareY + (i - (Q - 1))))] = CHSV(forground_hue, saturation, 255); //
+    }
+
+    leds(XY(squareX - Q, squareY - Q), XY(squareX + Q, squareY - Q)) = CHSV(forground_hue, saturation, 255); //
+  }
+
+
+  if (forgroundAnimation.millisDelay(animationSpeed)) {
+    squareSequencer++;
+  }
+
+
+
+
+
+}
 
 
 void horizontal_lines(bool randomSpeed = true) {

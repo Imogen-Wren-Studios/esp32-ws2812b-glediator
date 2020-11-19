@@ -133,6 +133,7 @@ void loop() {
 
   if (currentMode == PLAYBACK_MODE) {
     LEDS.setBrightness(BRIGHTNESS);
+
     runDemo();
     FastLED.show();
   } else {
@@ -144,38 +145,58 @@ void loop() {
 
 
 
-#define NUM_EFFECTS 9
+#define NUM_EFFECTS 12
 
 
 
 void runDemo() {
 
   if (currentEffect == 0) {
+     demo_delayTime = 60;
     rainbow_demo();
-    demo_delayTime = 60;
+   
   } else if (currentEffect == 1) {
     demo_delayTime = 10;
     trans_flag();
+    
   } else if (currentEffect == 2) {
     bi_flag();
+    
   } else if (currentEffect == 3) {
-    solid_colour(true);
     demo_delayTime = 60;
+    solid_colour(true);
+    
   } else if (currentEffect == 4) {
     demo_delayTime = 10;
     pride_flag();
+    
   } else if (currentEffect == 5) {
     demo_delayTime = 60;
     horizontal_lines();
+    
   } else if (currentEffect == 6) {
     demo_delayTime = 10;
     pan_flag();
+    
   } else if (currentEffect == 7) {
     inclusive_flag();
+    
   } else if (currentEffect == 8) {
-    agender_flag();
+    demo_delayTime = 60;
+    generate_squares(false, true);       // (background colour, fast Colour shift)
+    
   } else if (currentEffect == 9) {
+    demo_delayTime = 10;
+    agender_flag();
+    
+  } else if (currentEffect == 10) {
+    demo_delayTime = 60;    
+    generate_squares(true, false);       // (background colour, fast Colour shift)
+    
+  } else if (currentEffect == 11) {
+    demo_delayTime = 10;
     aromantic_flag();
+    
   }
 
   if (demoDelay.secondsDelay(demo_delayTime)) {
