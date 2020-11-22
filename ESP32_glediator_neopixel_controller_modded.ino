@@ -90,6 +90,7 @@ autoDelay demoDelay;
 #include "wifi_functions.h"
 #include "udp_functions.h"
 #include "fastLED_functions.h"
+#include "animation_helpers.h"
 #include "animations.h"
 #define COLOUR_ORDER GRB
 
@@ -97,7 +98,7 @@ void setup() {
 
   Serial.begin(115200);
 
-  randomSeed(analogRead(0));   // psudo random number generator for demo delay times
+  randomSeed(analogRead(0));   // psudo random number generator for randomness & chaos
 
   wifi_setup();
 
@@ -133,7 +134,7 @@ void loop() {
 
   if (currentMode == PLAYBACK_MODE) {
     LEDS.setBrightness(BRIGHTNESS);
-
+  //  generate_squares(false, true);       // (background colour, fast Colour shift)
     runDemo();
     FastLED.show();
   } else {
@@ -147,6 +148,17 @@ void loop() {
 
 #define NUM_EFFECTS 12
 
+
+void randomEffects(){
+// 
+// choose a random background effect
+
+
+// chose a random forground effect.
+
+
+  
+}
 
 
 void runDemo() {

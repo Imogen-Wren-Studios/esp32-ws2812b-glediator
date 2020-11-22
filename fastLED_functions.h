@@ -139,13 +139,20 @@ uint16_t XY( uint8_t x, uint8_t y){
 // were supplied.
 
 
+// could this work with returning safe led as led number 64 as a safe pixel?
+uint16_t XYsafe( uint8_t x, uint8_t y){
+  if( x >= kMatrixWidth) return 65;
+  if( y >= kMatrixHeight) return 65;
+  return XY(x,y);
+}
 
+/*
 uint16_t XYsafe( uint8_t x, uint8_t y){
   if( x >= kMatrixWidth) return -1;
   if( y >= kMatrixHeight) return -1;
   return XY(x,y);
 }
-
+*/
 
 
 
