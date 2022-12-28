@@ -24,11 +24,14 @@ I use jinx! to send UDP packets. Basic Setup Instructions:
 Ensure that all sub-menues read as per screenshots
 
 ### Matrix Options
+
 ![image](https://user-images.githubusercontent.com/53580358/209884346-cc38eadb-e64d-44c4-9541-43450391305d.png)
 
 ### Output Devices
 
 - Click Add, then ensure match to:
+
+
 ![image](https://user-images.githubusercontent.com/53580358/209884372-8c52d926-ad0b-456c-8950-46771d2f8bf0.png)
 
 - Click ok to add tmp2.net device.
@@ -37,6 +40,8 @@ Ensure that all sub-menues read as per screenshots
 ### Output Patch
 - Select tmp2.net device from `Patch Device` drop down menu
 - Click `Fast Patch` then ensure menu match to:
+
+
 ![image](https://user-images.githubusercontent.com/53580358/209884486-469bb832-5584-499d-9a8e-f44837a09d04.png)
 
 - NOTE: If colours are incorrect (eg green for red) redo this step but change `Pixel Order` eg from RGB to GRB but this may just need to experiment with your specific LED strip
