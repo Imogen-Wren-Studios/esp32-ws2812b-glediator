@@ -57,6 +57,11 @@ Ensure that all sub-menues read as per screenshots
 ![image](https://user-images.githubusercontent.com/53580358/209884713-db4d1246-f990-4691-b45f-54304eaf9c08.png)
 
 
+### Demo Mode
+
+If no output from PC, or missed data packets, ESP will revert to demo after 10 seconds
+
+
 
 
 
