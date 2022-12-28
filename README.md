@@ -12,7 +12,7 @@ I use jinx! to send UDP packets. Basic Setup Instructions:
 
 1. Download Jinx! http://www.live-leds.de/
 
-2. Load this sketch into ESP32. (Make sure to enter correct WiFi credentials)
+2. Load this sketch into ESP32. (Make sure to enter correct WiFi credentials) ESP and PC running Jinx! must be on same network subnet. (currently set to 192.168.1.x but change to suit your WiFi network) 
 
 3. Make connections between LED matrix and ESP32.
   - #define DATA_PIN      5  
