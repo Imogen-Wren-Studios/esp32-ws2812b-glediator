@@ -51,8 +51,8 @@ char writePacket[PACKET_SIZE];  // Buffer to copy and save the frame data as it 
 
 // Wifi & UDP Variables
 
-const char* ssid     = "EE-Hub-G3ge";  //Wifi Name  - SSID
-const char* password = "stock-led-HALF"; //Router Password - PASSWORD
+const char* ssid     = "XXXXXX";  //Wifi Name  - SSID
+const char* password = "XXXXXXXX"; //Router Password - PASSWORD
 
 IPAddress ip(192, 168, 1, 222);
 IPAddress gateway(192, 168, 1, 1);
