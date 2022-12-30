@@ -9,7 +9,7 @@ I use jinx! to send UDP packets. Basic Setup Instructions:
 
 ### Dependencies
 Sketch has the following dependencies:
-* lautoDelay Library available from [here](https://github.com/PanGalacticTech/autoDelay_Library) - written by Imogen Wren H
+* autoDelay Library available from [here](https://github.com/PanGalacticTech/autoDelay_Library) - written by Imogen Wren H
 
 ## Using Glediator with Jinx!
 
